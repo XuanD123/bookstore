@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookstore</title>
+</head>
+<body>
+<h1>Kirjan tiedot</h1>
+<p>Otsikko: <span th:text="${book.title}"></span></p>
+<p>Kirjailija: <span th:text="${book.author}"></span></p>
+<p>Julkaisuvuosi: <span th:text="${book.publicationYear}"></span></p>
+<p>ISBN: <span th:text="${book.isbn}"></span></p>
+<p>Hinta: <span th:text="${book.price}"></span> €</p>
+</body>
+</html>
