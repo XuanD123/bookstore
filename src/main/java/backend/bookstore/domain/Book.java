@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 public class Book {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
+    private Long id;
     
     private String title;
     private String author;
@@ -18,7 +18,9 @@ public class Book {
     private double price;
 
     
-    public Book() {}
+    public Book() {
+
+    }
 
     public Book(String title, String author, int publicationYear, String isbn, double price) {
         this.title = title;
@@ -26,6 +28,9 @@ public class Book {
         this.publicationYear = publicationYear;
         this.isbn = isbn;
         this.price = price;
+    }
+    public Long getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -69,13 +74,8 @@ public class Book {
     }
 
     @Override
-public String toString() {
-    return "Book(id=" + id +
-            ", title=" + title +
-            ", author=" + author +
-            ", isbn=" + isbn +
-            ", price=" + price +
-            ", publicationYear=" + publicationYear + ")";
+    public String toString() {
+        return title + " by " + author;
 }
 }
 
