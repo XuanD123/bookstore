@@ -5,6 +5,9 @@ import backend.bookstore.domain.BookRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 public class BookController {
@@ -26,6 +29,21 @@ public class BookController {
     public String bookList(Model model) {
         model.addAttribute("books", repository.findAll());
         return "booklist"; // viittaa booklist.html:ään templates-kansiossa
+    }
+    @GetMapping("/addbook")
+    public String addBookForm(Model model) {
+        model.addAttribute("book", new Book());
+        return "addbook";
+    }
+    @PostMapping("/addbook")
+    public String addBookSubmit(@ModelAttribute Book book) {
+        repository.save(book);
+        return "redirect:/booklist";
+    }
+    @GetMapping("/delete/{id}")
+    public String deleteBook(@PathVariable("id") Long id) {
+        repository.deleteById(id);
+        return "redirect:/booklist";
     }
 }
 
