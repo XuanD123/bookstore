@@ -3,24 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Book List</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 70%;
-        }
-        th, td {
-            border: 1px solid #888;
-            padding: 8px;
-        }
-        th {
-            background-color: #ddd;
-        }
-    </style>
+    <link type="text/css" 
+      rel="stylesheet" 
+      href="/css/bootstrap.min.css" 
+      th:href="@{/css/bootstrap.min.css}" />
+   
 </head>
 <body>
 <h1>Book List</h1>
 
-<table>
+<table class="table table-striped">
     <thead>
     <tr>
         <th>ID</th>
@@ -40,15 +32,17 @@
         <td th:text="${book.price}"></td>
         <td th:text="${book.publicationYear}"></td>
         <td>
-        <a th:href="@{/delete/{id}(id=${book.id})}">Delete</a>
+        <a th:href="@{/delete/{id}(id=${book.id})}"
+           class="btn btn-danger">Delete</a>
+    |
+        <a th:href="@{/edit/{id}(id=${book.id})}">Edit</a>
     </td>
     </tr>
     </tbody>
 </table>
 <p>
-    <a th:href="@{/addbook}">
-        <button type="button">Add Book</button>
-    </a>
+    <a th:href="@{/addbook}" class="btn btn-success">Add Book</a>
 </p>
+
 </body>
 </html>
