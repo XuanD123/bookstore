@@ -8,13 +8,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import backend.bookstore.domain.CategoryRepository;
 
 @Controller
 public class BookController {
     private final BookRepository repository;
 
-    public BookController(BookRepository repository) {
+    private final CategoryRepository categoryRepository;
+
+    public BookController(BookRepository repository, CategoryRepository categoryRepository) {
         this.repository = repository;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("/index")
@@ -33,6 +37,7 @@ public class BookController {
     @GetMapping("/addbook")
     public String addBookForm(Model model) {
         model.addAttribute("book", new Book());
+        model.addAttribute("categories", categoryRepository.findAll()); 
         return "addbook";
     }
     @PostMapping("/addbook")
@@ -45,13 +50,15 @@ public class BookController {
         repository.deleteById(id);
         return "redirect:/booklist";
     }
+
     @GetMapping("/edit/{id}")
     public String editBook(@PathVariable("id") Long id, Model model) {
-    Book book = repository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
-    
-    model.addAttribute("book", book);
-    return "editbook";
+        Book book = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
+
+        model.addAttribute("book", book);
+        model.addAttribute("categories", categoryRepository.findAll()); 
+        return "editbook";
     }
     @PostMapping("/save")
     public String save(Book book) {
