@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/books")
+@RequestMapping("/api/custombooks")
 public class BookRestController {
 
     private final BookRepository repository;
