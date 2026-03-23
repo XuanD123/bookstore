@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/custombooks")
+@RequestMapping("/api/custombooks") //tehtävä 2, muutin api/books -> api/custombooks 
+                                    //tai kommentoi pois koko bookrestcontroller
 public class BookRestController {
 
     private final BookRepository repository;
