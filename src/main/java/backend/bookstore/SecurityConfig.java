@@ -7,13 +7,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import backend.bookstore.domain.AppUser;
 
 
 
@@ -27,6 +32,9 @@ public class SecurityConfig  {
       http
       .authorizeHttpRequests(authorize -> authorize
         	.requestMatchers("/css/**").permitAll() // Enable css when logged out
+            .requestMatchers("/css/**").permitAll()// Login ja signup näkyvät kaikille
+            .requestMatchers("/login", "/signup", "/saveuser").permitAll() // Delete vain adminille
+            .requestMatchers("/books/delete/**").hasAuthority("ADMIN") // Kaikki muut URL:t näkyvät kaikille kirjautuneille
         	.anyRequest().authenticated()
       )
       .formLogin(formlogin -> formlogin
@@ -39,9 +47,14 @@ public class SecurityConfig  {
       );
       return http.build();
     }
+    
+     @Bean
+    public BCryptPasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+}
 
-
-    @Bean
+   /* @Bean
     public UserDetailsService userDetailsService() {
         List<UserDetails> users = new ArrayList<>();
 
@@ -64,7 +77,7 @@ public class SecurityConfig  {
     	users.add(user2);
 
         return new InMemoryUserDetailsManager(users);
-    }
+    }*/
 
-}
+
 

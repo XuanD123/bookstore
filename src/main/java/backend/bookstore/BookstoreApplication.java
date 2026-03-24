@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import backend.bookstore.domain.AppUser;
+import backend.bookstore.domain.AppUserRepository;
 import backend.bookstore.domain.Book;
 import backend.bookstore.domain.BookRepository;
 import backend.bookstore.domain.Category;
@@ -23,7 +25,7 @@ public class BookstoreApplication {
     
 
 @Bean
-public CommandLineRunner bookDemo(BookRepository brepository, CategoryRepository cRepository) {
+public CommandLineRunner bookDemo(BookRepository brepository, CategoryRepository cRepository,  AppUserRepository appUserRepository) {
     return (args) -> {
         log.info("Save some categories");
 
@@ -40,6 +42,11 @@ public CommandLineRunner bookDemo(BookRepository brepository, CategoryRepository
         brepository.save(new Book("Effective Java", "Joshua Bloch", 2018, "9780134685991", 50.0, scifi));
         brepository.save(new Book("Spring in Action", "Craig Walls", 2022, "9781617297571", 55.0, comic));
         
+        // Create users: admin/admin user/user
+			AppUser user1 = new AppUser("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "USER");
+			AppUser user2 = new AppUser("admin", "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C", "ADMIN");
+			appUserRepository.save(user1);
+			appUserRepository.save(user2);
 
         log.info("Fetch all the categories");
 			for (Category category : cRepository.findAll()) {

@@ -43,12 +43,21 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
             <td th:text="${book.price}"></td>
             <td th:text="${book.publicationYear}"></td>
             <td th:text="${book.category != null ? book.category.name : 'No Category'}"></td>
+            <th sec:authorize="hasAuthority('ADMIN')"> </th>
+            
+
             <td>
                 <!--<a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a>-->
                 <a th:href="@{/edit/{id}(id=${book.id})}" class="btn btn-primary">Edit</a>
             
-                <a sec:authorize="hasRole('ADMIN')"
-                   th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-xs btn-danger">Delete</a>
+                <!--<a sec:authorize="hasRole('ADMIN')"
+                   th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-xs btn-danger">Delete</a>-->
+            <a sec:authorize="hasAuthority('ADMIN')"
+             th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-xs btn-danger">Delete</a>
+            <td>
+   
+    
+</td>
             </td> 
         </tr>
     </tbody>
